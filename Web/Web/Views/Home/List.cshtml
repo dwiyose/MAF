@@ -1,0 +1,72 @@
+﻿@model IEnumerable<Web.Models.TransactionModel>
+@{
+    var dropdownItems = ViewBag.Locations;
+    bool isLocated = false;
+    string unknown = "Location Unknown";
+}
+
+<h1>List</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>No Aggreement</th>
+            <th>No BPKP</th>
+            <th>Branch ID</th>
+            <th>Tanggal BPKB</th>
+            <th>Tanggal BPKB In</th>
+            <th>No Faktur</th>
+            <th>Tanggal Faktur</th>
+            <th>Location ID</th>
+            <th>Location Name</th>
+            <th>No Polisi</th>
+            <th>Created By</th>
+            <th>Created Date</th>
+            <th>Updated By</th>
+            <th>Updated Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var report in Model)
+        {
+            isLocated = false;
+            <tr>
+                <td>@report.agreement_number</td>
+                <td>@report.bpkb_no</td>
+                <td>@report.branch_id</td>
+                <td>@report.bpkb_date</td>
+                <td>@report.bpkb_date_in</td>
+                <td>@report.faktur_no</td>
+                <td>@report.faktur_date</td>
+                <td>@report.location_id</td>
+                @foreach (var item in dropdownItems)
+                {
+
+                    @if (item.location_id == report.location_id)
+                    {
+                        <td>
+                            @item.location_name
+                        </td>
+                        isLocated = true;
+                        break;
+                    }
+
+                } 
+                @if (!isLocated)
+                {
+
+                    <td>@unknown</td>
+                }
+                @* <td>@dropdownItems.(p => p.location_id).Where(p => p.location_id == report.location_id)).FirstOrDefault()</td> *@
+                <td>@report.police_no</td>
+                <td>@report.created_by</td>
+                <td>@report.created_on</td>
+                <td>@report.last_updated_by</td>
+                <td>@report.last_updated_on
+
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script src="../wwwroot/js/site.js"></script>
