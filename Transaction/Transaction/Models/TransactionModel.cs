@@ -1,7 +1,10 @@
-﻿namespace Transaction.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Transaction.Models
 {
     public class TransactionModel
     {
+        [Key]
         public string agreement_number { get; set; }
         public string bpkb_no { get; set; }
         public string branch_id { get; set; }

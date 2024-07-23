@@ -10,6 +10,12 @@ namespace Transaction.Models
         }
 
         public DbSet<TransactionModel> tr_bpkb { get; set; }
+        //protected override void OnModelCreating(ModelBuilder modelBuilder)
+        //{
+        //    base.OnModelCreating(modelBuilder);
 
+        //    modelBuilder.Entity<TransactionModel>()
+        //      .HasNoKey();
+        //}
     }
 }

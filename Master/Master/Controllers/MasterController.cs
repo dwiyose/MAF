@@ -53,16 +53,28 @@ namespace Master.Controllers
             return user;
         }
         [HttpGet("GetAllLocation")]
-        public async Task<ActionResult<IEnumerable<ms_user>>> GetLocations()
+        public async Task<ActionResult<IEnumerable<ms_location>>> GetLocations()
         {
-            var user = await _context.ms_user.ToListAsync();
+            var location = await _context.ms_location_storage.ToListAsync();
 
-            if (user == null)
+            if (location == null)
             {
                 return NotFound();
             }
 
-            return user;
+            return location;
+        }
+        [HttpGet("GetOneLocation/{location_id}")]
+        public async Task<ActionResult<ms_location>> GetOneLocation(string location_id)
+        {
+            var location = await _context.ms_location_storage.FirstOrDefaultAsync(p => p.location_id == location_id);
+
+            if (location == null)
+            {
+                return NotFound();
+            }
+
+            return location;
         }
     }
 }

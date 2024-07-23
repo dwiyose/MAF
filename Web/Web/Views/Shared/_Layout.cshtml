@@ -19,12 +19,34 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+                       @if (ViewBag.username != null)
+                        {
+                            <li class="nav-item clsHome">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            </li>
+                            <li class="nav-item clsHome">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="List">Data List</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                                   aria-haspopup="true" aria-expanded="false">
+                                    <i class="fas fa-user" style="color : #98cd2d;"></i> <span class="clearfix d-none d-sm-inline-block pl-2">Hi, @ViewBag.username</span>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                                    <a class="dropdown-item" href="~/Login/Logout"><i class="fas fa-sign-out-alt pr-2"></i>Log Out</a>
+                                </div>
+                            </li>
+
+                            <li class="nav-item clsRep">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Logout">Log Out</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item viewBagUser">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Login">BELUM MASUK</a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>

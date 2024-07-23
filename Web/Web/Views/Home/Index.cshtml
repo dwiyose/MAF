@@ -1,23 +1,29 @@
 ﻿@model Web.Models.TransactionModel
 @{
-    var dropdownItems = ViewBag.Locations as List<Web.Models.ms_location>;
+    var dropdownItems = ViewBag.Locations;
     var selectedItem = ViewBag.SelectedItem as string;
 }
 @{
     ViewData["Title"] = "Home Page";
+}
+@if (TempData.ContainsKey("AlertMessage"))
+{
+    <div class="alert @TempData["AlertType"]" role="alert">
+        @TempData["AlertMessage"]
+    </div>
 }
 <h1>Create Request</h1>
 
 <form asp-action="Create" method="post">
     <div class="form-group disabled">
         <label asp-for="agreement_number" class="control-label">Agreement Number</label>
-        <input asp-for="agreement_number" class="form-control"  />
+        <input asp-for="agreement_number" class="form-control" />
         <span asp-validation-for="agreement_number" class="text-danger"></span>
     </div>
-   
+
     <div class="form-group">
         <label asp-for="bpkb_no" class="control-label">BPKB No</label>
-        <input asp-for="bpkb_no" class="form-control"  />
+        <input asp-for="bpkb_no" class="form-control" />
         <span asp-validation-for="bpkb_no" class="text-danger"></span>
     </div>
     <div class="form-group">
@@ -34,7 +40,7 @@
         <label asp-for="bpkb_date_in" class="control-label">Tanggal BPKB In</label>
         <input asp-for="bpkb_date_in" class="form-control" />
         <span asp-validation-for="bpkb_date_in" class="text-danger"></span>
-    </div>  
+    </div>
     <div class="form-group">
         <label asp-for="faktur_no" class="control-label">No Faktur</label>
         <input asp-for="faktur_no" class="form-control" />
@@ -50,27 +56,44 @@
         <input asp-for="police_no" class="form-control" />
         <span asp-validation-for="police_no" class="text-danger"></span>
     </div>
-    <div class="form-group">
-        <label asp-for="location_id" class="control-label">Lokasi Penyimpanan</label>
-        <input asp-for="location_id" class="form-control" />
+    @*     <div class="form-group">
+    <label asp-for="location_id" class="control-label">Lokasi Penyimpanan</label>
+    <input asp-for="location_id" class="form-control" />
+    <span asp-validation-for="location_id" class="text-danger"></span>
+    </div> *@
+    <div></div>
+    <div class="input-group">
+        <label class="control-label">Lokasi</label>
+    </div>
+    <div class="input-group mb-3">
+        <select asp-for="location_id" class="custom-select" id="ddlLoc"> @* onchange="onChangeLoc()" *@
+
+            <option selected disabled>Choose Kode Barang...</option>
+            @if (dropdownItems != null)
+            {
+                foreach (var item in dropdownItems)
+                {
+                    <option value="@item.location_id" data-name="@item.location_name">@item.location_name</option>
+                }
+            }
+        </select>
         <span asp-validation-for="location_id" class="text-danger"></span>
     </div>
-
     <div class="form-group" hidden>
         <label asp-for="created_by" class="control-label">Status</label>
         <input asp-for="created_by" class="form-control" value="admin" readonly />
         <span asp-validation-for="created_by" class="text-danger"></span>
-    </div> 
+    </div>
     <div class="form-group" hidden>
         <label asp-for="created_on" class="control-label">Status</label>
         <input asp-for="created_on" class="form-control" value="01-01-2001" readonly />
         <span asp-validation-for="created_by" class="text-danger"></span>
-    </div> 
+    </div>
     <div class="form-group" hidden>
         <label asp-for="last_updated_by" class="control-label">Status</label>
         <input asp-for="last_updated_by" class="form-control" value="admin" readonly />
         <span asp-validation-for="last_updated_by" class="text-danger"></span>
-    </div> 
+    </div>
     <div class="form-group" hidden>
         <label asp-for="last_updated_on" class="control-label">Status</label>
         <input asp-for="last_updated_on" class="form-control" value="01-01-2001" readonly />

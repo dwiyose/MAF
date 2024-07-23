@@ -14,10 +14,10 @@ namespace Transaction.Controllers
             _context = context;
         }
 
-        [HttpGet("{agreement_number}")]
-        public async Task<ActionResult<TransactionModel>> GetProduct(string id)
+        [HttpGet("GetByAggrementNumber")]
+        public async Task<ActionResult<TransactionModel>> GetProduct(string aggrement_number)
         {
-            var tr = await _context.tr_bpkb.FindAsync(id);
+            var tr = await _context.tr_bpkb.FindAsync(aggrement_number);
 
             if (tr == null)
             {
@@ -26,14 +26,26 @@ namespace Transaction.Controllers
 
             return tr;
         }
+        [HttpGet("GetAllTransaction")]
+        public async Task<ActionResult<IEnumerable<TransactionModel>>> GetUsers()
+        {
+            var user = await _context.tr_bpkb.ToListAsync();
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return user;
+        }
 
         [HttpPost("Save")]
         public async Task<ActionResult<TransactionModel>> PostProduct(TransactionModel product)
         {
             _context.tr_bpkb.Add(product);
             await _context.SaveChangesAsync();
-
-            return CreatedAtAction(nameof(GetProduct), new { id = product.agreement_number }, product);
+            //TransactionModel trans = GetProduct(product.agreement_number);
+            return product;
         }
     }
 }
